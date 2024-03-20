@@ -45,7 +45,9 @@ class _RegisterScreenState extends RegisterController {
                     const InputLabel(label: "Nama Lengkap"),
                     TextFormField(
                       controller: nama,
+                      textCapitalization: TextCapitalization.words,
                       keyboardType: TextInputType.name,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 0,
@@ -71,6 +73,7 @@ class _RegisterScreenState extends RegisterController {
                     TextFormField(
                       controller: email,
                       keyboardType: TextInputType.emailAddress,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 0,
@@ -89,6 +92,10 @@ class _RegisterScreenState extends RegisterController {
                           return "Wajib diisi";
                         }
 
+                        if (value.length < 6) {
+                          return "Panjang karakter minimal 6";
+                        }
+
                         return null;
                       },
                     ),
@@ -96,6 +103,7 @@ class _RegisterScreenState extends RegisterController {
                     TextFormField(
                       obscureText: showPassword ? false : true,
                       controller: password,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.symmetric(
                           vertical: 0,
@@ -131,6 +139,7 @@ class _RegisterScreenState extends RegisterController {
                     TextFormField(
                       controller: alamat,
                       keyboardType: TextInputType.streetAddress,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       minLines: 3,
                       maxLines: null,
                       decoration: const InputDecoration(
@@ -168,6 +177,7 @@ class _RegisterScreenState extends RegisterController {
                     TextFormField(
                       controller: noHP,
                       keyboardType: TextInputType.phone,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: const InputDecoration(
                         contentPadding: EdgeInsets.symmetric(
                           vertical: 0,
