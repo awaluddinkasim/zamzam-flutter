@@ -34,6 +34,10 @@ class _LoginScreenState extends LoginController {
     if (error != null) {
       Future.delayed(Duration.zero, () {
         alert(context, "Gagal", error!);
+      }).then((_) {
+        setState(() {
+          error = null;
+        });
       });
     }
 
