@@ -92,10 +92,6 @@ class _RegisterScreenState extends RegisterController {
                           return "Wajib diisi";
                         }
 
-                        if (value.length < 6) {
-                          return "Panjang karakter minimal 6";
-                        }
-
                         return null;
                       },
                     ),
@@ -130,6 +126,10 @@ class _RegisterScreenState extends RegisterController {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Wajib diisi";
+                        }
+
+                        if (value.length < 6) {
+                          return "Panjang karakter minimal 6";
                         }
 
                         return null;
