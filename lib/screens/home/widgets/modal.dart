@@ -106,18 +106,20 @@ class _BarangModalState extends ConsumerState<BarangModal> {
               }).toList(),
             ),
             FilledButton(
-              onPressed: () {
-                ref.read(cartProvider.notifier).addToCart(
-                      CartItem(
-                          uuid: const Uuid().v1(),
-                          kode: widget.barang['kode'],
-                          barang: widget.barang['nama'],
-                          harga: int.parse(widget.barang['harga'].toString()),
-                          varian: selectedVariant!,
-                          qty: 1),
-                    );
-                Navigator.pop(context);
-              },
+              onPressed: selectedVariant != null
+                  ? () {
+                      ref.read(cartProvider.notifier).addToCart(
+                            CartItem(
+                                uuid: const Uuid().v1(),
+                                kode: widget.barang['kode'],
+                                barang: widget.barang['nama'],
+                                harga: int.parse(widget.barang['harga'].toString()),
+                                varian: selectedVariant!,
+                                qty: 1),
+                          );
+                      Navigator.pop(context);
+                    }
+                  : null,
               child: const Text("Tambah ke Keranjang"),
             ),
           ],
