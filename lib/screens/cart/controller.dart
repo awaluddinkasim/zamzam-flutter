@@ -11,6 +11,7 @@ import 'package:zamzam/shared/states/cart.dart';
 
 abstract class CartController extends ConsumerState<CartScreen> {
   final tanggal = TextEditingController();
+  final hari = TextEditingController();
 
   List<CartItem> cartItems = [];
   DateTime? tanggalPenyewaan;
@@ -23,6 +24,7 @@ abstract class CartController extends ConsumerState<CartScreen> {
     final cartNotifier = ref.read(cartProvider.notifier);
 
     Map data = {
+      "hari": hari.text,
       "tgl_penyewaan": tanggalPenyewaan.toString(),
       "items": cartItems.map((e) => e.toJson()).toList(),
     };

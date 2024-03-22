@@ -6,6 +6,7 @@ import 'package:zamzam/shared/states/auth.dart';
 
 abstract class OrderDetailController extends ConsumerState<OrderDetailScreen> {
   Map order = {};
+  Map rekening = {};
 
   bool isLoading = true;
 
@@ -22,6 +23,7 @@ abstract class OrderDetailController extends ConsumerState<OrderDetailScreen> {
     if (response.statusCode == 200) {
       setState(() {
         order = response.data['order'];
+        rekening = response.data['rekening'];
         isLoading = false;
       });
     }

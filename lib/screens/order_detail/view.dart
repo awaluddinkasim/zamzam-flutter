@@ -47,7 +47,8 @@ class _OrderDetailScreenState extends OrderDetailController {
                           const Expanded(
                             child: Text("Total Harga"),
                           ),
-                          Text("Rp. ${formatter.format(order['total_harga'])}"),
+                          Text(
+                              "Rp. ${formatter.format(num.parse(order['total_harga'].toString()))}"),
                         ],
                       ),
                       if (order['status'] == "Belum Lunas")
@@ -56,7 +57,7 @@ class _OrderDetailScreenState extends OrderDetailController {
                             const Expanded(
                               child: Text("Sisa Pembayaran"),
                             ),
-                            Text("Rp. ${formatter.format(order['sisa'])}"),
+                            Text("Rp. ${formatter.format(num.parse(order['sisa'].toString()))}"),
                           ],
                         ),
                       Row(
@@ -123,6 +124,39 @@ class _OrderDetailScreenState extends OrderDetailController {
                                     "Rp. ${formatter.format(num.parse(item['qty'].toString()) * num.parse(item['varian']['barang']['harga'].toString()))}"),
                               ],
                             ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        children: [
+                          const Expanded(
+                            child: Text(
+                              "Subtotal",
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                              "Rp. ${formatter.format(num.parse(order['subtotal_harga'].toString()))}"),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              "Total selama ${order['hari']} hari",
+                              textAlign: TextAlign.end,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                              "Rp. ${formatter.format(num.parse(order['total_harga'].toString()))}"),
                         ],
                       ),
                       const SizedBox(
@@ -215,29 +249,102 @@ class _OrderDetailScreenState extends OrderDetailController {
                           ],
                         ),
                       const SizedBox(
-                        height: 25,
+                        height: 20,
                       ),
                       if (order['status'] == 'Belum Lunas')
-                        FilledButton(
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(12),
-                                  topRight: Radius.circular(12),
-                                ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 10,
+                                horizontal: 30,
                               ),
-                              builder: (context) {
-                                return UploadModal(
-                                  order: order,
-                                );
+                              decoration: BoxDecoration(
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  const Text(
+                                    "Silahkan transfer pembayaran ke rekening berikut",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 15),
+                                    child: Row(
+                                      children: [
+                                        const Text(
+                                          "Bank : ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "${rekening['bank']}",
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(left: 15),
+                                    child: Row(
+                                      children: [
+                                        const Text(
+                                          "No. Rekening : ",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            "${rekening['nomor']}",
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            FilledButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12),
+                                    ),
+                                  ),
+                                  builder: (context) {
+                                    return UploadModal(
+                                      order: order,
+                                    );
+                                  },
+                                ).then((e) {
+                                  fetchOrder();
+                                });
                               },
-                            ).then((e) {
-                              fetchOrder();
-                            });
-                          },
-                          child: const Text("Upload Bukti Pembayaran"),
+                              child: const Text("Upload Bukti Pembayaran"),
+                            ),
+                          ],
                         ),
                     ],
                   ),
